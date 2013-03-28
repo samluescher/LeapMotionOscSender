@@ -73,8 +73,16 @@ void testApp::update(){
             
             if (simpleHandsPrevious.size() == simpleHands.size()) {
 //                cout << simpleHandsPrevious.size() << endl;
+                
+                float dx = simpleHands[i].handPos.x - simpleHandsPrevious[i].handPos.x;
+                float dy = simpleHands[i].handPos.z - simpleHandsPrevious[i].handPos.z;
+                float dz = simpleHands[i].handPos.y - simpleHandsPrevious[i].handPos.y;
+                
                 ofxOscMessage m;
-                m.setAddress("/relief/broadcast/");
+                m.setAddress("/relief/broadcast/leap");
+                m.addFloatArg(dx);
+                m.addFloatArg(dy);
+                m.addFloatArg(dz);
                 sender.sendMessage(m);
                 
             }
