@@ -5,6 +5,9 @@
 #include "ofxLeapMotion.h"
 #include "ofxStrip.h"
 
+#define RELIEF_HOST "localhost" //"18.111.18.106"
+#define RELIEF_PORT 78746
+
 class testApp : public ofBaseApp{
 
   public:
@@ -25,6 +28,7 @@ class testApp : public ofBaseApp{
 	ofxLeapMotion leap;
 	vector <ofxLeapMotionSimpleHand> simpleHands;
     
+    vector <ofxLeapMotionSimpleHand> simpleHandsPrevious;
     ofxOscSender sender;
     
 	vector <int> fingersFound; 

@@ -6,7 +6,7 @@ void testApp::setup(){
 
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
-	ofSetLogLevel(OF_LOG_VERBOSE);
+	//ofSetLogLevel(OF_LOG_VERBOSE);
 
 	leap.open(); 
 
@@ -17,11 +17,16 @@ void testApp::setup(){
 
 	glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
+    
+    // open an outgoing connection to HOST:PORT
+	sender.setup(RELIEF_HOST, RELIEF_PORT);
 }
 
 
 //--------------------------------------------------------------
 void testApp::update(){
+    
+    
 
 	fingersFound.clear();
 	
@@ -45,6 +50,7 @@ void testApp::update(){
     
         for(int i = 0; i < simpleHands.size(); i++){
         
+            /*
             for(int j = 0; j < simpleHands[i].fingers.size(); j++){
                 int id = simpleHands[i].fingers[j].id;
             
@@ -62,9 +68,21 @@ void testApp::update(){
                 
                 //store fingers seen this frame for drawing
                 fingersFound.push_back(id);
+            } */
+            
+            
+            if (simpleHandsPrevious.size() == simpleHands.size()) {
+//                cout << simpleHandsPrevious.size() << endl;
+                ofxOscMessage m;
+                m.setAddress("/relief/broadcast/");
+                sender.sendMessage(m);
+                
             }
+            
         }
     }
+    
+    simpleHandsPrevious = simpleHands;
 
 
     // Option 2: Work with the leap data / sdk directly - gives you access to more properties than the simple approach  
@@ -135,6 +153,7 @@ void testApp::draw(){
 	m1.begin(); 
 	m1.setShininess(0.6);
 	
+    
 	for(int i = 0; i < fingersFound.size(); i++){
 		ofxStrip strip;
 		int id = fingersFound[i];
@@ -159,44 +178,54 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-  
+//    cout << "key pressed" << endl;
+//    if(key == 'a' || key == 'A'){
+//		ofxOscMessage m;
+//		m.setAddress("/relief/broadcast/map");
+//        m.addIntArg(1);
+//        m.addFloatArg(3.5f);
+//        m.addStringArg("hello");
+//        m.addFloatArg(ofGetElapsedTimef());
+//		sender.sendMessage(m);
+//	}
 }
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
+//    cout << "key released" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
-
+//    cout << "mouse moved" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-
+//    cout << "mouse dragged" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-
+//    cout << "mouse pressed" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-
+//    cout << "mouse released" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-
+//    cout << "window resized" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::gotMessage(ofMessage msg){
-
+//    cout << "got message" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::dragEvent(ofDragInfo dragInfo){
-
+//    cout << "drag event" << endl;
 }
