@@ -44,9 +44,11 @@ void testApp::update(){
     
     if( leap.isFrameNew() && simpleHands.size() ){
     
+        /*
         leap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
 		leap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
         leap.setMappingZ(-150, 150, -200, 200);
+         */
     
         for(int i = 0; i < simpleHands.size(); i++){
         
@@ -71,18 +73,18 @@ void testApp::update(){
             } */
             
             
-            if (simpleHandsPrevious.size() == simpleHands.size()) {
+            if (simpleHandsPrevious.size() == simpleHands.size() && simpleHands[i].fingers.size() <= 2) {
 //                cout << simpleHandsPrevious.size() << endl;
                 
                 float dx = simpleHands[i].handPos.x - simpleHandsPrevious[i].handPos.x;
                 float dy = simpleHands[i].handPos.z - simpleHandsPrevious[i].handPos.z;
-                float dz = simpleHands[i].handPos.y - simpleHandsPrevious[i].handPos.y;
+                float dz = -simpleHands[i].handPos.y + simpleHandsPrevious[i].handPos.y;
                 
                 ofxOscMessage m;
-                m.setAddress("/relief/broadcast/leap");
-                m.addFloatArg(dx);
-                m.addFloatArg(dy);
-                m.addFloatArg(dz);
+                m.setAddress("/camtracker/pan");
+                m.addFloatArg(5*dx);
+                m.addFloatArg(5*dy);
+                m.addFloatArg(5*dz);
                 sender.sendMessage(m);
                 
             }
