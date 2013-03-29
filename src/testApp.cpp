@@ -73,35 +73,22 @@ void testApp::update(){
             } */
             
             
-            if (simpleHandsPrevious.size() == simpleHands.size()){
-                // zoom
-                if (simpleHands[i].fingers.size() == 0) {
+            if (simpleHandsPrevious.size() == simpleHands.size() && simpleHands[i].fingers.size() <= 2){
                     
-                    float dx = simpleHands[i].handPos.x - simpleHandsPrevious[i].handPos.x;
-                    float dy = simpleHands[i].handPos.z - simpleHandsPrevious[i].handPos.z;
-                    float dz = -simpleHands[i].handPos.y + simpleHandsPrevious[i].handPos.y;
-                    
-                    ofxOscMessage m;
-                    m.setAddress("/camtracker/zoom");
-                    m.addFloatArg(5*dx);
-                    m.addFloatArg(5*dy);
-                    m.addFloatArg(5*dz);
-                    sender.sendMessage(m);
-                }
-                // pan
-                else if (simpleHands[i].fingers.size() == 1) {
-                    
-                    float dx = simpleHands[i].handPos.x - simpleHandsPrevious[i].handPos.x;
-                    float dy = simpleHands[i].handPos.z - simpleHandsPrevious[i].handPos.z;
-                    float dz = -simpleHands[i].handPos.y + simpleHandsPrevious[i].handPos.y;
-                    
-                    ofxOscMessage m;
-                    m.setAddress("/camtracker/pan");
-                    m.addFloatArg(5*dx);
-                    m.addFloatArg(5*dy);
-                    m.addFloatArg(5*dz);
-                    sender.sendMessage(m);
-                }
+                float dx = simpleHands[i].handPos.x - simpleHandsPrevious[i].handPos.x;
+                float dy = simpleHands[i].handPos.z - simpleHandsPrevious[i].handPos.z;
+                float dz = -simpleHands[i].handPos.y + simpleHandsPrevious[i].handPos.y;
+                int numFingers = simpleHands[i].fingers.size();
+                
+                ofxOscMessage m;
+                m.setAddress("/camtracker/pan");
+                m.addFloatArg(5*dx);
+                m.addFloatArg(5*dy);
+                m.addFloatArg(5*dz);
+                m.addIntArg(numFingers==2);
+                m.addIntArg(numFingers==0);
+                
+                sender.sendMessage(m);
             }
             
         }
