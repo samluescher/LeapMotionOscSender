@@ -52,8 +52,10 @@ void testApp::update(){
     
         for(int i = 0; i < simpleHands.size(); i++){
         
-            /*
+            
             for(int j = 0; j < simpleHands[i].fingers.size(); j++){
+            
+                /*
                 int id = simpleHands[i].fingers[j].id;
             
                 ofPolyline & polyline = fingerTrails[id]; 
@@ -70,7 +72,8 @@ void testApp::update(){
                 
                 //store fingers seen this frame for drawing
                 fingersFound.push_back(id);
-            } */
+                 */
+            }
             
             
             if (simpleHandsPrevious.size() == simpleHands.size() && simpleHands[i].fingers.size() <= 2){
@@ -82,15 +85,18 @@ void testApp::update(){
                 
                 ofxOscMessage m;
                 m.setAddress("/camtracker/pan");
-                m.addFloatArg(5*dx);
-                m.addFloatArg(5*dy);
-                m.addFloatArg(5*dz);
-                m.addIntArg(numFingers==2);
+                m.addFloatArg(dx);
+                m.addFloatArg(dy);
+                m.addFloatArg(dz);
                 m.addIntArg(numFingers==0);
+                m.addIntArg(numFingers==1);
+                m.addIntArg(numFingers==2);
+                m.addIntArg(numFingers==3);
+                m.addIntArg(numFingers==4);
+                m.addIntArg(numFingers==5);
                 
                 sender.sendMessage(m);
             }
-            
         }
     }
     
@@ -190,54 +196,36 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-//    cout << "key pressed" << endl;
-//    if(key == 'a' || key == 'A'){
-//		ofxOscMessage m;
-//		m.setAddress("/relief/broadcast/map");
-//        m.addIntArg(1);
-//        m.addFloatArg(3.5f);
-//        m.addStringArg("hello");
-//        m.addFloatArg(ofGetElapsedTimef());
-//		sender.sendMessage(m);
-//	}
 }
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
-//    cout << "key released" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
-//    cout << "mouse moved" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-//    cout << "mouse dragged" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-//    cout << "mouse pressed" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-//    cout << "mouse released" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-//    cout << "window resized" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::gotMessage(ofMessage msg){
-//    cout << "got message" << endl;
 }
 
 //--------------------------------------------------------------
 void testApp::dragEvent(ofDragInfo dragInfo){
-//    cout << "drag event" << endl;
 }
